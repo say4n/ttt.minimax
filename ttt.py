@@ -12,11 +12,14 @@ class TicTacToe:
             1: "X"
         }
 
-    def act(self, player):
-        return player ^ 1
+    def act(self, cell):
+        # Set value of cell to player's mark.
+        self.board[cell] = self.player_lut[self.player]
+        # Change turn of player.
+        self.player ^= 1
 
     def get_empty_cells(self):
-        pass
+        return [index for index, val in enumerate(self.board) if val is None]
 
     def __check_win(self):
         # Check rows.
@@ -47,6 +50,12 @@ class TicTacToe:
 
             return self.board[2]
 
+        return None
 
     def __repr__(self):
         pass
+
+
+if __name__ == "__main__":
+    board = TicTacToe()
+    breakpoint()
