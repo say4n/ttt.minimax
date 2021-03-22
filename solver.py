@@ -28,23 +28,40 @@ def minimax(game, is_maximizing):
 
         return min_value
 
+def player_move():
+    game.step()
+
+def computer_move():
+    best_move, best_value = None, float("-inf")
+    for move in game.get_empty_cells():
+        game_t = dc(game)
+        game_t.act(move)
+        value = minimax(game_t, False)
+
+        if value > best_value:
+            best_value = value
+            best_move = move
+
+    game.act(best_move)
+
 if __name__ == "__main__":
     game = TicTacToe()
 
+    choice = input("Do you want to first (y/Y)? ")
+    go_first = choice == "y" or choice == "Y"
+
+
     while not game.is_gameover():
-        # Turn for player.
-        if game.get_turn() == 1:
-            game.step()
-        # Turn for computer.
+        if go_first:
+            if game.get_turn() == 1:
+                player_move()
+            else:
+                computer_move()
         else:
-            best_move, best_value = None, float("-inf")
-            for move in game.get_empty_cells():
-                game_t = dc(game)
-                game_t.act(move)
-                value = minimax(game_t, False)
+            if game.get_turn() == 1:
+                computer_move()
+            else:
+                player_move()
 
-                if value > best_value:
-                    best_value = value
-                    best_move = move
-
-            game.act(best_move)
+    if game.winner == "TIE":
+        print("TIE!")
