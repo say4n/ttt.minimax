@@ -3,7 +3,6 @@ from copy import deepcopy as dc
 
 def minimax(game, is_maximizing):
     if game.is_gameover():
-        print(game)
         return game.get_reward()
 
     if is_maximizing:
@@ -13,6 +12,7 @@ def minimax(game, is_maximizing):
             game_t = dc(game)
             game_t.act(move)
             value = minimax(game_t, False)
+            del game_t
             max_value = max(max_value, value)
 
         return max_value
@@ -23,6 +23,7 @@ def minimax(game, is_maximizing):
             game_t = dc(game)
             game_t.act(move)
             value = minimax(game_t, True)
+            del game_t
             min_value = min(min_value, value)
 
         return min_value

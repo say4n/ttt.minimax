@@ -20,6 +20,8 @@ class TicTacToe:
         self.board[cell] = self.player_lut[self.player]
         # Change turn of player.
         self.player ^= 1
+        # Check if game has been won.
+        self.__check_win()
 
     def get_empty_cells(self):
         return [index for index, val in enumerate(self.board) if val is None]
@@ -31,7 +33,6 @@ class TicTacToe:
         return self.player
 
     def get_reward(self):
-        print("Getting reward.")
         # Computer wins.
         if self.winner == "O":
             return 1
